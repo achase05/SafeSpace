@@ -1,0 +1,28 @@
+<resources>
+    <!-- Activity Labels -->
+    <string name="title_activity_standard_registration">Standard Registration</string>
+    <string name="title_activity_medical_registration">Medical Registration</string>
+    <string name="title_activity_user_profile">User Profile</string>
+
+    <!-- View strings -->
+    <string name="app_name">SafeSpace</string>
+    <string name="app_title">SafeSpace</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="register_link">Not registered yet? Click here!</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="birthday">Birthday</string>
+    <string name="click_for_birthday">Click to select birthday</string>
+    <string name="forgot_pass">Forgot password?</string>
+    <string name="date_of_birth">Date of birth:</string>
+    <string name="training_center_id">Training Center ID</string>
+
+    <!-- Options for medical skills in Medical Registration dropdown-->
+    <string-array name="medical_skills">
+        <item>CPR</item>
+    </string-array>
+</resources>

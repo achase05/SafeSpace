@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:background="@color/blue0">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:hint="@string/first_name"
+            android:inputType="text"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:id="@+id/med_reg_first_name" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/last_name"
+            android:inputType="text"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:id="@+id/med_reg_last_name" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:id="@+id/med_reg_email" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:fontFamily="sans-serif"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:id="@+id/med_reg_password" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:hint="@string/confirm_password_hint"
+            android:inputType="textPassword"
+            android:fontFamily="sans-serif"
+            android:background="@drawable/custom_edittext"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:id="@+id/med_reg_conf_password" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/birthday"
+            android:paddingLeft="5dp"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/med_reg_DOB"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/click_for_birthday"
+            android:textAllCaps="false"
+            android:theme="@style/AppTheme.Button"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/expertise_label"
+            android:text="Expertise"
+            android:textColor="@color/white"/>
+
+
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:id="@+id/medical_skills"
+            android:padding="10dp"
+            android:layout_below="@id/expertise_label">
+        </Spinner>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/training_center_id"
+            android:padding="10dp"
+            android:layout_below="@id/expertise_label"
+            android:layout_toRightOf="@id/medical_skills"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/custom_edittext"
+            android:hint="@string/training_center_id"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:text="@string/register"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:theme="@style/AppTheme.Button"
+            android:id="@+id/med_reg_register_btn" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
