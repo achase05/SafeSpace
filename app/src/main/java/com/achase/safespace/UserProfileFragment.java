@@ -18,8 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class UserProfileFragment extends Fragment {
     private Button logoutBtn;
-    private TextView currentUserEmail;
-
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
@@ -30,9 +28,6 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_user_profile, container, false);
-
-        currentUserEmail = (TextView)v.findViewById(R.id.currentUserEmail);
-        currentUserEmail.setText(user.getEmail().toString());
 
         logoutBtn = (Button)v.findViewById(R.id.logout_button);
         logoutBtn.setOnClickListener(new View.OnClickListener() {

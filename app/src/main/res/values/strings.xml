@@ -20,6 +20,10 @@
     <string name="forgot_pass">Forgot password?</string>
     <string name="date_of_birth">Date of birth:</string>
     <string name="training_center_id">Training Center ID</string>
+    <string name="user_name_label">Name</string>
+    <string name="user_name">Last Name, First Name</string>
+    <string name="birthday_label">Birthday</string>
+    <string name="health_and_conditions_label">Health and Conditions</string>
 
     <!-- Options for medical skills in Medical Registration dropdown-->
     <string-array name="medical_skills">
