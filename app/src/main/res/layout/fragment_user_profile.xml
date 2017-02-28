@@ -18,16 +18,17 @@
 
             <ImageView
                 android:id="@+id/user_photo"
-                android:layout_height="100dp"
-                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:layout_width="150dp"
                 android:scaleType="centerInside"
                 android:background="@android:color/darker_gray"
                 android:cropToPadding="true"/>
 
             <ImageButton
                 android:id="@+id/user_camera"
-                android:layout_width="match_parent"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:src="@android:drawable/ic_menu_camera"/>
         </LinearLayout>
 
@@ -43,7 +44,7 @@
                 android:text="@string/user_name_label"
                 style="?android:listSeparatorTextViewStyle"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,14 +53,28 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/birthday_label"
                 style="?android:listSeparatorTextViewStyle"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/user_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/birthday_label"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/user_type_label"
+                style="?android:listSeparatorTextViewStyle"/>
+
+            <TextView
+                android:id="@+id/user_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_type"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -79,7 +94,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test"/>
+            android:text="@string/health_conditions_placeholder"/>
 
     </LinearLayout>
 
@@ -92,13 +107,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Skills and Certificaitions"
+            android:text="@string/skills_certifications_label"
             style="?android:listSeparatorTextViewStyle"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test"/>
+            android:text="@string/skills_certifications_placeholder"/>
 
     </LinearLayout>
 
@@ -106,6 +121,7 @@
         android:id="@+id/logout_button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:text="Logout"/>
 

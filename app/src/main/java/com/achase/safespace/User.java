@@ -4,19 +4,19 @@ package com.achase.safespace;
  * Created by achas on 2/18/2017.
  */
 
-public class StandardUser {
+public class User {
     public String firstName;
     public String lastName;
     public String birthDate;
+    public String userType;
 
-    public StandardUser(){
+    public User(){}
 
-    }
-
-    public StandardUser(String firstName, String lastName, String birthDate){
+    public User(String firstName, String lastName, String birthDate, String userType){
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.userType = userType;
     }
 
     public String getFirstName() {
@@ -41,5 +41,9 @@ public class StandardUser {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getUserType() {
+        return userType;
     }
 }

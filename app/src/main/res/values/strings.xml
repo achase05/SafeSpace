@@ -24,6 +24,11 @@
     <string name="user_name">Last Name, First Name</string>
     <string name="birthday_label">Birthday</string>
     <string name="health_and_conditions_label">Health and Conditions</string>
+    <string name="health_conditions_placeholder">Health information will appear in this section.</string>
+    <string name="skills_certifications_label">Skills and Certifications</string>
+    <string name="skills_certifications_placeholder">Medical skills and certifications will appear here.</string>
+    <string name="user_type_label">User Type</string>
+    <string name="user_type">User type</string>
 
     <!-- Options for medical skills in Medical Registration dropdown-->
     <string-array name="medical_skills">

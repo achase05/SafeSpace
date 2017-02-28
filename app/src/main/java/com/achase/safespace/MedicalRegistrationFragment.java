@@ -199,9 +199,9 @@ public class MedicalRegistrationFragment extends Fragment {
     }
 
     public void addUserInfo(String firstName, String lastName, String birthDate, String medicalSkill, String trainingCenterId){
-        MedicalUser user = new MedicalUser(firstName, lastName, birthDate, medicalSkill, trainingCenterId);
+        User user = new User(firstName, lastName, birthDate, "Medical user");
         String userID = mAuth.getCurrentUser().getUid().toString();
 
-        mDatabase.child("MedicalUsers").child(userID).setValue(user);
+        mDatabase.child("users").child(userID).setValue(user);
     }
 }

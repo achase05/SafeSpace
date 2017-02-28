@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -183,9 +182,9 @@ public class StandardRegistrationFragment extends Fragment {
     }
 
     public void addUserInfo(String firstName, String lastName, String birthDate){
-        StandardUser user = new StandardUser(firstName, lastName, birthDate);
+        User user = new User(firstName, lastName, birthDate, "Standard user");
         String userID = mAuth.getCurrentUser().getUid().toString();
 
-        mDatabase.child("StandardUsers").child(userID).setValue(user);
+        mDatabase.child("users").child(userID).setValue(user);
     }
 }
