@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 
@@ -54,6 +56,7 @@ public class UserProfileFragment extends Fragment {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+
         mPhotoFile = getPhotoFile();
     }
 
@@ -67,6 +70,8 @@ public class UserProfileFragment extends Fragment {
         mUserBirthday = (TextView)v.findViewById(R.id.user_birthday);
         mUserType = (TextView)v.findViewById(R.id.user_type);
         mUserPhoto = (ImageView)v.findViewById(R.id.user_photo);
+
+        //Taking photo and setting it as user profile picture
         mUserCamera = (ImageButton)v.findViewById(R.id.user_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -85,6 +90,7 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+        //Changing values in user profile by setting the text based on the Firebase information
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
