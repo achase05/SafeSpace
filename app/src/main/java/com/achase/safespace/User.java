@@ -46,4 +46,8 @@ public class User {
     public String getUserType() {
         return userType;
     }
+
+    public String getPhotoFilename(String userID){
+        return "IMG_" + userID + ".jpg";
+    }
 }
