@@ -1,5 +1,6 @@
 package com.achase.safespace;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_frame_layout);
 
         FragmentManager fm = getSupportFragmentManager();

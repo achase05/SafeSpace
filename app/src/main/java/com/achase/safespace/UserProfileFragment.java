@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +32,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 /**
@@ -49,6 +57,11 @@ public class UserProfileFragment extends Fragment {
 
     private FirebaseUser user;
     private DatabaseReference mDatabase;
+    private FirebaseStorage mStorage;
+    private StorageReference mStorageRef;
+    private StorageReference mPhotosRef;
+    private StorageReference mUserPhotoRef;
+    private StorageReference mPhotosUserPhotoRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -56,6 +69,11 @@ public class UserProfileFragment extends Fragment {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        mStorage = FirebaseStorage.getInstance();
+        mStorageRef = mStorage.getReference();
+        mPhotosRef = mStorageRef.child("photos");
+        mUserPhotoRef = mStorageRef.child(mCurrentUser.getPhotoFilename(user.getUid()));
+        mPhotosUserPhotoRef = mStorageRef.child("photos/" + mCurrentUser.getPhotoFilename(user.getUid()));
 
         mPhotoFile = getPhotoFile();
     }
@@ -124,6 +142,10 @@ public class UserProfileFragment extends Fragment {
         return v;
     }
 
+
+    //Methods for taking and setting user profile picture
+
+
     public File getPhotoFile(){
         File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
@@ -141,6 +163,7 @@ public class UserProfileFragment extends Fragment {
         } else {
             Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
             mUserPhoto.setImageBitmap(bitmap);
+            uploadPhoto(mUserPhoto);
         }
     }
 
@@ -153,5 +176,28 @@ public class UserProfileFragment extends Fragment {
         if(requestCode == REQUEST_PHOTO){
             updatePhotoView();
         }
+    }
+
+    public void uploadPhoto(ImageView imageView){
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+       // Bitmap bitmap = imageView.getDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mUserPhotoRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed to upload image to database.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
     }
 }
