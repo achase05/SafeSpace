@@ -182,7 +182,7 @@ public class StandardRegistrationFragment extends Fragment {
     }
 
     public void addUserInfo(String firstName, String lastName, String birthDate){
-        User user = new User(firstName, lastName, birthDate, "Standard user");
+        User user = new User(firstName, lastName, birthDate, "Standard user", null);
         String userID = mAuth.getCurrentUser().getUid().toString();
 
         mDatabase.child("users").child(userID).setValue(user);

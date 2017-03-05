@@ -13,6 +13,9 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -49,6 +52,7 @@ public class UserProfileFragment extends Fragment {
     private TextView mUsername;
     private TextView mUserBirthday;
     private TextView mUserType;
+    private TextView mSkillsCerts;
     private ImageView mUserPhoto;
     private ImageButton mUserCamera;
     private User mCurrentUser = new User();
@@ -66,6 +70,7 @@ public class UserProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
@@ -79,6 +84,26 @@ public class UserProfileFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.user_profile_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.menu_item_logout:
+                FirebaseAuth.getInstance().signOut();
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
@@ -88,6 +113,7 @@ public class UserProfileFragment extends Fragment {
         mUserBirthday = (TextView)v.findViewById(R.id.user_birthday);
         mUserType = (TextView)v.findViewById(R.id.user_type);
         mUserPhoto = (ImageView)v.findViewById(R.id.user_photo);
+        mSkillsCerts = (TextView)v.findViewById(R.id.skills_certifications);
 
         //Taking photo and setting it as user profile picture
         mUserCamera = (ImageButton)v.findViewById(R.id.user_camera);
@@ -116,6 +142,10 @@ public class UserProfileFragment extends Fragment {
                 mUsername.setText(mCurrentUser.lastName + ", " + mCurrentUser.firstName);
                 mUserBirthday.setText(mCurrentUser.birthDate);
                 mUserType.setText(mCurrentUser.userType);
+
+                if(mCurrentUser.userType.equals("Medical user")){
+                    mSkillsCerts.setText(mCurrentUser.userSkill);
+                }
 
                 System.out.println(mCurrentUser.getFirstName());
             }

@@ -9,14 +9,16 @@ public class User {
     public String lastName;
     public String birthDate;
     public String userType;
+    public String userSkill;
 
     public User(){}
 
-    public User(String firstName, String lastName, String birthDate, String userType){
+    public User(String firstName, String lastName, String birthDate, String userType, String userSkill){
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.userType = userType;
+        this.userSkill = userSkill;
     }
 
     public String getFirstName() {
@@ -45,6 +47,14 @@ public class User {
 
     public String getUserType() {
         return userType;
+    }
+
+    public String getUserSkill() {
+        return userSkill;
+    }
+
+    public void setUserSkill(String userSkill) {
+        this.userSkill = userSkill;
     }
 
     public String getPhotoFilename(String userID){

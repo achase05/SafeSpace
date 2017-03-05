@@ -6,12 +6,18 @@
         <item name="colorPrimary">@color/blue1</item>
         <item name="colorPrimaryDark">@color/blue2</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionOverflowMenuStyle">@style/OptionsMenu</item>
     </style>
 
     <!--Button styles-->
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/white</item>
         <item name="android:textColor">@color/blue0</item>
+    </style>
+
+    <style name="OptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/blue1</item>
     </style>
 
 </resources>

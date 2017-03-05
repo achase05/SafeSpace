@@ -111,6 +111,7 @@
             style="?android:listSeparatorTextViewStyle"/>
 
         <TextView
+            android:id="@+id/skills_certifications"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/skills_certifications_placeholder"/>

@@ -29,6 +29,9 @@
     <string name="skills_certifications_placeholder">Medical skills and certifications will appear here.</string>
     <string name="user_type_label">User Type</string>
     <string name="user_type">User type</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="see_users">Users Near You</string>
+    <string name="logout">Logout</string>
 
     <!-- Options for medical skills in Medical Registration dropdown-->
     <string-array name="medical_skills">

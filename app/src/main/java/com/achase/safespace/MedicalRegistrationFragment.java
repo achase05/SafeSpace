@@ -81,7 +81,7 @@ public class MedicalRegistrationFragment extends Fragment {
                 if(user != null){
                     //User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    addUserInfo(userFirstName, userLastName, userDOB, userMedicalSkill, userTrainingCenterId);
+                    addUserInfo(userFirstName, userLastName, userDOB, userMedicalSkill);
                     Intent intent = new Intent(getActivity(), UserProfileActivity.class);
                     startActivity(intent);
                 }else{
@@ -198,8 +198,8 @@ public class MedicalRegistrationFragment extends Fragment {
         return isValid;
     }
 
-    public void addUserInfo(String firstName, String lastName, String birthDate, String medicalSkill, String trainingCenterId){
-        User user = new User(firstName, lastName, birthDate, "Medical user");
+    public void addUserInfo(String firstName, String lastName, String birthDate, String medicalSkill){
+        User user = new User(firstName, lastName, birthDate, "Medical user", medicalSkill);
         String userID = mAuth.getCurrentUser().getUid().toString();
 
         mDatabase.child("users").child(userID).setValue(user);
