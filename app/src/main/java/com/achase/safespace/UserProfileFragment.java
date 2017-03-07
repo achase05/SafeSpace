@@ -12,15 +12,19 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +62,7 @@ public class UserProfileFragment extends Fragment {
     private User mCurrentUser = new User();
     private Context mContext;
     private File mPhotoFile;
+    private ViewGroup mConditionsListView;
 
     private FirebaseUser user;
     private DatabaseReference mDatabase;
@@ -66,6 +71,7 @@ public class UserProfileFragment extends Fragment {
     private StorageReference mPhotosRef;
     private StorageReference mUserPhotoRef;
     private StorageReference mPhotosUserPhotoRef;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -114,6 +120,7 @@ public class UserProfileFragment extends Fragment {
         mUserType = (TextView)v.findViewById(R.id.user_type);
         mUserPhoto = (ImageView)v.findViewById(R.id.user_photo);
         mSkillsCerts = (TextView)v.findViewById(R.id.skills_certifications);
+        mConditionsListView = (LinearLayout)v.findViewById(R.id.conditions_list);
 
         //Taking photo and setting it as user profile picture
         mUserCamera = (ImageButton)v.findViewById(R.id.user_camera);
@@ -156,16 +163,7 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        logoutBtn = (Button)v.findViewById(R.id.logout_button);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        populateConditionsList(mConditionsListView);
 
         updatePhotoView();
 
@@ -229,5 +227,16 @@ public class UserProfileFragment extends Fragment {
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
+    }
+
+    public void populateConditionsList(ViewGroup v){
+        String[] conditions = {"Test1", "Test2"};
+
+        for(int i = 0; i < conditions.length; i++) {
+            TextView condition = new TextView(getActivity());
+            condition.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            condition.setText(conditions[i]);
+            v.addView(condition);
+        }
     }
 }
