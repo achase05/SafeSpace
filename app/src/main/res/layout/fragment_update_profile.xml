@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@color/blue0">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/update_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/first_name"
+                android:textColor="@color/white"
+                android:ems="10"
+                android:background="@drawable/custom_edittext"
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/new_first_name"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/last_name"
+                android:ems="10"
+                android:background="@drawable/custom_edittext"
+                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/new_last_name"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:text="@string/update_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/update_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/update_birthday_btn"
+            android:theme="@style/AppTheme.Button"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="@string/update_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/new_conditions_list"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/enter_condition"
+                android:textColor="@color/white"
+                android:ems="10"
+                android:background="@drawable/custom_edittext"
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"/>
+
+            <ImageButton
+                android:text="@string/add_condition_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_condition_btn"
+                android:src="@android:drawable/ic_input_add"
+                android:theme="@style/AppTheme.Button"
+                android:layout_marginTop="15dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/confirm_update_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="@string/confirm_update"
+            android:theme="@style/AppTheme.Button"/>
+
+    </LinearLayout>
+</ScrollView>

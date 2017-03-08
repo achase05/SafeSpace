@@ -32,6 +32,13 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="see_users">Users Near You</string>
     <string name="logout">Logout</string>
+    <string name="update_name">Update Name</string>
+    <string name="update_birthday">Update Birthday</string>
+    <string name="update_conditions">Update Medical Conditions</string>
+    <string name="add_condition_btn">Add New Condition</string>
+    <string name="enter_condition">Enter Condition</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="confirm_update">Update</string>
 
     <!-- Options for medical skills in Medical Registration dropdown-->
     <string-array name="medical_skills">

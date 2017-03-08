@@ -101,9 +101,12 @@ public class UserProfileFragment extends Fragment {
             case R.id.menu_item_logout:
                 FirebaseAuth.getInstance().signOut();
 
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                Intent logoutIntent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(logoutIntent);
                 return true;
+            case R.id.menu_item_edit:
+                Intent editIntent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(editIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }

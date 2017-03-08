@@ -46,6 +46,10 @@
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile">
         </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/update_profile">
+        </activity>
     </application>
 
 </manifest>
