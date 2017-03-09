@@ -36,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +45,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by achas on 2/12/2017.
@@ -51,6 +54,9 @@ import java.io.File;
 
 public class UserProfileFragment extends Fragment {
     private static final int REQUEST_PHOTO = 1;
+
+    GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+    List<String> conditions;
 
     private Button logoutBtn;
     private TextView mUsername;
@@ -232,14 +238,31 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
-    public void populateConditionsList(ViewGroup v){
-        String[] conditions = {"Test1", "Test2"};
+    public void populateConditionsList(final ViewGroup v){
+        //String[] conditions = {"Test1", "Test2"};
 
-        for(int i = 0; i < conditions.length; i++) {
-            TextView condition = new TextView(getActivity());
-            condition.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            condition.setText(conditions[i]);
-            v.addView(condition);
-        }
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("conditions").child(user.getUid());
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                conditions = dataSnapshot.getValue(t);
+
+                if(conditions!=null) {
+                    for (int i = 0; i < conditions.size(); i++) {
+                        TextView condition = new TextView(getActivity());
+                        condition.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        condition.setText(conditions.get(i));
+                        v.addView(condition);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
