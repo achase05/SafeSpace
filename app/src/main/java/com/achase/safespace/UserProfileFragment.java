@@ -1,6 +1,8 @@
 package com.achase.safespace;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +14,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,21 +50,28 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by achas on 2/12/2017.
  */
 
 public class UserProfileFragment extends Fragment {
+    private static final String DIALOG_EMERGENCY = "DialogEmergency";
+
     private static final int REQUEST_PHOTO = 1;
+    private static final int REQUEST_EMERGENCY = 2;
 
     GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
     List<String> conditions;
 
-    private Button logoutBtn;
+    private Button mEmergencyBtn;
     private TextView mUsername;
     private TextView mUserBirthday;
     private TextView mUserType;
@@ -66,12 +79,13 @@ public class UserProfileFragment extends Fragment {
     private ImageView mUserPhoto;
     private ImageButton mUserCamera;
     private User mCurrentUser = new User();
-    private Context mContext;
     private File mPhotoFile;
     private ViewGroup mConditionsListView;
+    private int notifyID = 0;
 
     private FirebaseUser user;
     private DatabaseReference mDatabase;
+    private DatabaseReference mUserInfoRef;
     private FirebaseStorage mStorage;
     private StorageReference mStorageRef;
     private StorageReference mPhotosRef;
@@ -85,7 +99,7 @@ public class UserProfileFragment extends Fragment {
         setHasOptionsMenu(true);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance();
         mStorageRef = mStorage.getReference();
         mPhotosRef = mStorageRef.child("photos");
@@ -130,6 +144,17 @@ public class UserProfileFragment extends Fragment {
         mUserPhoto = (ImageView)v.findViewById(R.id.user_photo);
         mSkillsCerts = (TextView)v.findViewById(R.id.skills_certifications);
         mConditionsListView = (LinearLayout)v.findViewById(R.id.conditions_list);
+        mEmergencyBtn = (Button)v.findViewById(R.id.emergency_button);
+
+        mEmergencyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                NotificationDialogFragment dialog = new NotificationDialogFragment();
+                dialog.setTargetFragment(UserProfileFragment.this, REQUEST_EMERGENCY);
+                dialog.show(manager, DIALOG_EMERGENCY);
+            }
+        });
 
         //Taking photo and setting it as user profile picture
         mUserCamera = (ImageButton)v.findViewById(R.id.user_camera);
@@ -150,8 +175,21 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+        mDatabase.child("receivers").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                publishNotification();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         //Changing values in user profile by setting the text based on the Firebase information
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        //mUserInfoRef.child("users").child(user.getUid());
+        mDatabase.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mCurrentUser = dataSnapshot.getValue(User.class);
@@ -171,6 +209,8 @@ public class UserProfileFragment extends Fragment {
 
             }
         });
+
+
 
         populateConditionsList(mConditionsListView);
 
@@ -213,6 +253,11 @@ public class UserProfileFragment extends Fragment {
         if(requestCode == REQUEST_PHOTO){
             updatePhotoView();
         }
+
+        if(requestCode == REQUEST_EMERGENCY){
+            String emergency = data.getStringExtra(NotificationDialogFragment.EXTRA_EMERGENCY);
+            sendNotificaiton(emergency);
+        }
     }
 
     public void uploadPhoto(ImageView imageView){
@@ -233,7 +278,7 @@ public class UserProfileFragment extends Fragment {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
     }
@@ -264,5 +309,115 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    private void sendNotificaiton(String emergency){
+       final List<String> receivers = new ArrayList<String>();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
+        mDatabase.setValue(emergency);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("receivers");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    //receivers.add(child.getKey().toString());
+                    if (!child.getKey().toString().equals(user.getUid().toString())){
+                        System.out.println(child.getKey() + " | " + user.getUid());
+                        mDatabase = FirebaseDatabase.getInstance().getReference().child("receivers").child(child.getKey().toString());
+                        mDatabase.setValue(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+       // mDatabase.setValue(false);
+        /*NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getActivity())
+                        .setSmallIcon(R.drawable.ic_stat_name)
+                        .setContentTitle("Emergency In Your Area!")
+                        .setContentText(emergency);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(getActivity(), EditProfileActivity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(EditProfileActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setAutoCancel(true);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(notifyID, mBuilder.build());*/
+    }
+
+    public void publishNotification(){
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String emergency = dataSnapshot.getValue().toString();
+
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(getActivity())
+                                .setSmallIcon(R.drawable.ic_stat_name)
+                                .setContentTitle("Emergency In Your Area!")
+                                .setContentText(emergency);
+                // Creates an explicit intent for an Activity in your app
+                Intent resultIntent = new Intent(getActivity(), EditProfileActivity.class);
+
+                // The stack builder object will contain an artificial back stack for the
+                // started Activity.
+                // This ensures that navigating backward from the Activity leads out of
+                // your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(EditProfileActivity.class);
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                mBuilder.setAutoCancel(true);
+
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                // mId allows you to update the notification later on.
+                mNotificationManager.notify(notifyID, mBuilder.build());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void logout(){
+        FirebaseAuth.getInstance().signOut();
+
+        Intent logoutIntent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(logoutIntent);
     }
 }

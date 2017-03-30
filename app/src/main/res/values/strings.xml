@@ -39,6 +39,8 @@
     <string name="enter_condition">Enter Condition</string>
     <string name="update_profile">Update Profile</string>
     <string name="confirm_update">Update</string>
+    <string name="emergency_button">EMERGENCY</string>
+    <string name="emergency_hint">Be brief!</string>
 
     <!-- Options for medical skills in Medical Registration dropdown-->
     <string-array name="medical_skills">
