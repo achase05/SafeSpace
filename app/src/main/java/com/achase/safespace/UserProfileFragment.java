@@ -175,7 +175,10 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        mDatabase.child("receivers").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+
+        /************* SENDS NOTIFICATION AFTER DATA CHANGED IN FIREBASE **************/
+
+        /*mDatabase.child("receivers").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 publishNotification();
@@ -185,7 +188,7 @@ public class UserProfileFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         //Changing values in user profile by setting the text based on the Firebase information
         //mUserInfoRef.child("users").child(user.getUid());
@@ -256,7 +259,7 @@ public class UserProfileFragment extends Fragment {
 
         if(requestCode == REQUEST_EMERGENCY){
             String emergency = data.getStringExtra(NotificationDialogFragment.EXTRA_EMERGENCY);
-            sendNotificaiton(emergency);
+            //sendNotificaiton(emergency);
         }
     }
 
@@ -311,7 +314,7 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-    private void sendNotificaiton(String emergency){
+    /*private void sendNotificaiton(String emergency){
        final List<String> receivers = new ArrayList<String>();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
@@ -336,40 +339,9 @@ public class UserProfileFragment extends Fragment {
 
             }
         });
+    }*/
 
-       // mDatabase.setValue(false);
-        /*NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getActivity())
-                        .setSmallIcon(R.drawable.ic_stat_name)
-                        .setContentTitle("Emergency In Your Area!")
-                        .setContentText(emergency);
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(getActivity(), EditProfileActivity.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(EditProfileActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        mBuilder.setAutoCancel(true);
-
-        NotificationManager mNotificationManager =
-                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(notifyID, mBuilder.build());*/
-    }
-
-    public void publishNotification(){
+    /*public void publishNotification(){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -412,7 +384,7 @@ public class UserProfileFragment extends Fragment {
 
             }
         });
-    }
+    }*/
 
     public void logout(){
         FirebaseAuth.getInstance().signOut();
