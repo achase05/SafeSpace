@@ -259,7 +259,7 @@ public class UserProfileFragment extends Fragment {
 
         if(requestCode == REQUEST_EMERGENCY){
             String emergency = data.getStringExtra(NotificationDialogFragment.EXTRA_EMERGENCY);
-            //sendNotificaiton(emergency);
+            sendNotificaiton(emergency);
         }
     }
 
@@ -314,13 +314,13 @@ public class UserProfileFragment extends Fragment {
 
     }
 
-    /*private void sendNotificaiton(String emergency){
-       final List<String> receivers = new ArrayList<String>();
+    private void sendNotificaiton(String emergency){
+       //final List<String> receivers = new ArrayList<String>();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Notification").child("message");
         mDatabase.setValue(emergency);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("receivers");
+        /*mDatabase = FirebaseDatabase.getInstance().getReference().child("receivers");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -338,8 +338,8 @@ public class UserProfileFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-    }*/
+        });*/
+    }
 
     /*public void publishNotification(){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("notification");
