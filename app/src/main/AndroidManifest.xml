@@ -2,21 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.achase.safespace">
 
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18"/>
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="SafeSpace"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:label="SafeSpace">
-
+        android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.achase.safespace.fileprovider"
@@ -24,8 +34,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
 
         <activity
@@ -39,27 +48,37 @@
         </activity>
         <activity
             android:name=".StandardRegistrationActivity"
-            android:label="@string/title_activity_standard_registration">
-        </activity>
+            android:label="@string/title_activity_standard_registration"></activity>
         <activity
             android:name=".MedicalRegistrationActivity"
-            android:label="@string/title_activity_medical_registration">
-        </activity>
+            android:label="@string/title_activity_medical_registration"></activity>
         <activity
             android:name=".UserProfileActivity"
-            android:label="@string/title_activity_user_profile">
-        </activity>
+            android:label="@string/title_activity_user_profile"></activity>
         <activity
             android:name=".EditProfileActivity"
-            android:label="@string/update_profile">
-        </activity>
+            android:label="@string/update_profile"></activity>
 
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

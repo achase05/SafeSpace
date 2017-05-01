@@ -39,7 +39,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             .setContentTitle("Emergency In Your Area!")
                             .setContentText(message);
             // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(this, EditProfileActivity.class);
+            Intent resultIntent = new Intent(this, MapsActivity.class);
 
             // The stack builder object will contain an artificial back stack for the
             // started Activity.
