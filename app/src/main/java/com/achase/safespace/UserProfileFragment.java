@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -58,6 +59,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * Created by achas on 2/12/2017.
  */
@@ -91,6 +94,7 @@ public class UserProfileFragment extends Fragment {
     private StorageReference mPhotosRef;
     private StorageReference mUserPhotoRef;
     private StorageReference mPhotosUserPhotoRef;
+    private Location location;
 
 
     @Override

@@ -2,6 +2,7 @@ package com.achase.safespace;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -58,6 +59,7 @@ public class MedicalRegistrationFragment extends Fragment {
     private String userDOB;
     private String userMedicalSkill;
     private String userTrainingCenterId;
+    private Location location;
 
     //Firebase
     private FirebaseAuth mAuth;
